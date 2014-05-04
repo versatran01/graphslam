@@ -12,10 +12,10 @@ classdef PoseNode < handle
     end
     
     properties (Dependent =  true)
-        x
-        y
-        yaw
-        rt     %> Transformation local to global
+        x    %> X coordinate
+        y    %> Y coordinate
+        yaw  %> Yaw angle
+        rt   %> Transformation local to global
     end
     
     methods
@@ -29,6 +29,15 @@ classdef PoseNode < handle
         function obj = PoseNode(id, pose)
             obj.id   = id;
             obj.pose = pose(:);
+        end
+        
+        %%%
+        %> @brief Plot one or more pose node
+        %%%
+        function plot(obj)
+            x = [obj.x];
+            y = [obj.y];
+            plot(x, y, 'b');
         end
         
         % Get methods
