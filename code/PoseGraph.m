@@ -45,6 +45,7 @@ classdef PoseGraph < handle
                 obj.node(i_node) = PoseNode(id, pose);
             end
             fclose(vfid);
+            fprintf('Vertices loaded from: %s\n', vfile);
             % Try opening edge file
             efid = fopen(efile);
             if (efid < 0)
@@ -71,6 +72,7 @@ classdef PoseGraph < handle
                 obj.edge(i_edge) = PoseEdge(id_from, id_to, mean, infm);
             end
             fclose(efid);
+            fprintf('Edges loaded from: %s\n', vfile);
         end
         
         %%%
@@ -96,7 +98,8 @@ classdef PoseGraph < handle
                 if vis
                     clf;
                     obj.plot();
-                    drawnow
+                    title(sprintf('Iteration %d', i_iter));
+                    drawnow;
                 end
             end
         end

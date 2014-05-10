@@ -10,3 +10,5 @@ This matlab version is a modification from Giorgio Grisetti's Octave code.
 The original Octave version can be found [here]
 (http://www.dis.uniroma1.it/~grisetti/teaching/lectures-ls-slam-master/web/lectures/practicals/ls-slam.tgz)
 
+All the license information is included in lsslam folder.
+

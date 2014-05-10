@@ -8,7 +8,7 @@ efile = '../data/killian-e.dat';
 
 %% 
 figure()
-g = PoseGraph();
-g.readGraph(vfile, efile);
+pg = PoseGraph();
+pg.readGraph(vfile, efile);
 % Do 5 iteration with visualization
-g.optimize(5, true);
+pg.optimize(5, true);
