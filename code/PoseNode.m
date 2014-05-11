@@ -1,46 +1,33 @@
-%%%
-%> @file PoseNode.m
-%> @brief A class for node in a pose graph
-%%%
 classdef PoseNode < handle
-    %POSENODE Summary of this class goes here
-    %   Detailed explanation goes here
+    %POSENODE A class for pose node
     
-    properties
-        id    %> Id of this pose node
-        pose  %> Pose of this pose node
-    end
+    properties (Access = public)
+        id    % Id of this pose node
+        pose  % Pose of this pose node
+    end  % properties public
     
-    properties (Dependent =  true)
-        x    %> X coordinate
-        y    %> Y coordinate
-        yaw  %> Yaw angle
-        rt   %> Transformation local to global
-    end
+    properties (Dependent = true)
+        x    % X coordinate
+        y    % Y coordinate
+        yaw  % Yaw angle
+        rt   % Transformation local to global
+    end  % properties dependent
     
     methods
-        %%%
-        %> @brief Class constructor
-        %> Instantiates an object of PoseNode
-        %>
-        %> @param pose a robot pose in 2d [x; y; yaw]
-        %> @return instance of the PoseNode class
-        %%%
+        
         function obj = PoseNode(id, pose)
+            % Constructor of PoseNode
             obj.id   = id;
             obj.pose = pose(:);
         end
         
-        %%%
-        %> @brief Plot one or more pose node
-        %%%
         function plot(obj)
+            % Plot all pose nodes position
             x = [obj.x];
             y = [obj.y];
             plot(x, y, 'b');
         end
         
-        % Get methods
         function x = get.x(obj)
             x = obj.pose(1);
         end
@@ -59,6 +46,6 @@ classdef PoseNode < handle
             rt = [R [obj.x; obj.y]; 0 0 1];
         end
         
-    end  % methods
+    end  % methods public
     
 end  % classdef

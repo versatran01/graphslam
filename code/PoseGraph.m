@@ -1,36 +1,30 @@
-%%%
-%> @file  PoseGraph.m
-%> @brief A class for doing pose graph optimization
-%%%
 classdef PoseGraph < handle
     %POSEGRAPH A class for doing pose graph optimization
     
     properties (SetAccess = private)
-        node  %> Pose nodes in graph
-        edge  %> Edge in graph
-        H     %> Information matrix
-        b     %> Information vector
-    end
+        node  % Pose nodes in graph
+        edge  % Edge in graph
+        H     % Information matrix
+        b     % Information vector
+    end  % properties set private
     
     properties (Dependent = true)
-        n_node  %> Number of nodes in graph
-        n_edge  %> Number of edges in graph
-        pose    %> Poses of all nodes
-    end
+        n_node  % Number of nodes in graph
+        n_edge  % Number of edges in graph
+        pose    % Poses of all nodes
+    end  % properties dependent
     
     methods
-        %%%
-        %> @brief Class constructor
-        %> Instantiates an object of GraphSlam
-        %>
-        %> @return instance of the GraphSlam class
-        %%%
+        
         function obj = PoseGraph()
+            % Constructor of PoseGraph
             obj.node = PoseNode.empty;
             obj.edge = PoseEdge.empty;
         end
         
         function readGraph(obj, vfile, efile)
+            % Reads graph from vertex and edge file
+            
             % Try opening vertex file
             vfid = fopen(vfile);
             if (vfid < 0)
@@ -75,19 +69,13 @@ classdef PoseGraph < handle
             fprintf('Edges loaded from: %s\n', vfile);
         end
         
-        %%%
-        %> @brief Plot all nodes and edges
-        %%%
         function plot(obj)
+            % Plots pose graph
             obj.node.plot();
         end
         
-        %%%
-        %> @brief pose graph optimization
-        %> @param n_iter Number of iteration to optimizae
-        %> @param vis True to turn visualization on
-        %%%
         function optimize(obj, n_iter, vis)
+            % Pose graph optimization
             if nargin < 3, vis = false; end
             if nargin < 2, n_iter = 1; end
             
@@ -104,10 +92,8 @@ classdef PoseGraph < handle
             end
         end
         
-        %%%
-        %> @brief one iteration of linearization and solving
-        %%%
         function iterate(obj)
+            % One iteration of pose graph optimization
             fprintf('Allocating Workspace.\n');
             % Create new H and b matrices each time
             obj.H = zeros(obj.n_node*3);   % 3n x 3n square matrix
@@ -119,11 +105,9 @@ classdef PoseGraph < handle
             fprintf('Solving.\n');
             obj.solve();
         end
-        
-        %%%
-        %> @brief Linearize error functions and formulate a linear system
-        %%%
+
         function linearize(obj)
+            % Linearize error functions and formulate a linear system
             for i_edge = 1:obj.n_edge
                 ei = obj.edge(i_edge);
                 % Get edge information
@@ -171,11 +155,9 @@ classdef PoseGraph < handle
                 obj.b(j_ind) = obj.b(j_ind) + b_j;
             end
         end
-        
-        %%%
-        %> @brief solve the linear system and update all pose node
-        %%%
+
         function solve(obj)
+            % Solves the linear system and update all pose node
             fprintf('Pose: %d, Edge: %d\n', obj.n_node, obj.n_edge);
             % The system (H b) is obtained only from relative constraints.
             % H is not full rank.
@@ -195,7 +177,6 @@ classdef PoseGraph < handle
             end
         end
         
-        % Get methods
         function n_node = get.n_node(obj)
             n_node = numel(obj.node);
         end
@@ -208,7 +189,7 @@ classdef PoseGraph < handle
             pose = [obj.node.pose];
         end
         
-    end  % methods
+    end  % methods public
     
 end  % classdef
 
